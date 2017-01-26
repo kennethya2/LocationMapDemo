@@ -11,6 +11,8 @@
 
 進入LocationMap入口與定位權限檢查。
 
+<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-MainActivity.png" width="216" height="384">
+
 #### 1. 開啟地圖前先進行定位權限檢查  
 在android 6.0以上版本 (API level 23)，對於危險權限的存取需要經過使用者同意。
 
@@ -25,11 +27,13 @@ if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACC
 }
 </code></pre>
 
+<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission.jpg" width="216" height="384">
+
 #### 2. 權限取得結果
 
  ``onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)``
  
-若使用者勾選不再提示時```showRationale==false```做後續處理，已取得定位權限 。
+若使用者勾選不再提示時```showRationale==false```做後續處理，以取得定位權限 。
 <pre><code> 
 boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]);
 if (!showRationale) { // user also CHECKED "never ask again"
@@ -49,6 +53,9 @@ private void goResetAppPermission(){
     startActivity(intent);
 }
 </code></pre>
+
+<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission-denied.png" width="216" height="384">
+<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission-setting.png" width="216" height="384">
 
 ### LocationMapActivity
 ----
@@ -113,6 +120,8 @@ mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoom));
 currentPositionMarker = mMap.addMarker(markerOpt);
 currentPositionMarker.showInfoWindow();
 </code></pre>
+
+<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-location.png" width="216" height="384">
 
 - 更新目前位置
 當reciever取得更新位置時，呼叫
