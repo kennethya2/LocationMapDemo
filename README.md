@@ -11,9 +11,9 @@
 
 進入LocationMap入口與定位權限檢查。
 
-![images](./images/locationmap-MainActivity.png =220x)
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-MainActivity.png" width="216" height="384">
 
-#### 1. 開啟地圖前先進行定位權限檢查  
+#### 1. 開啟地圖前先進行定位權限檢查
 在android 6.0以上版本 (API level 23)，對於危險權限的存取需要經過使用者同意。
 
 參考：[Normal and Dangerous Permissions](https://developer.android.com/guide/topics/security/permissions.html#normal-dangerous)
@@ -27,21 +27,21 @@ if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACC
 }
 </code></pre>
 
-![images](./images/locationmap-permission.jpg =220x)
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission.jpg" width="216" height="384">
 
 #### 2. 權限取得結果
 
  ``onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)``
- 
+
 若使用者勾選不再提示時```showRationale==false```做後續處理，以取得定位權限 。
-<pre><code> 
+<pre><code>
 boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]);
 if (!showRationale) { // user also CHECKED "never ask again"
     showToast();
     showDialog();
 }
- </code></pre> 
- 
+ </code></pre>
+
 #### 3. 前往app設定開啟定位權限
 
 未開啟權限導致無法正常功能時，建議使用者前往設定頁面開啟。
@@ -54,8 +54,8 @@ private void goResetAppPermission(){
 }
 </code></pre>
 
-![images](./images/locationmap-permission-denied.png =220x)
-![images](./images/locationmap-permission-setting.png =220x)
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission-denied.png" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission-setting.png" width="216" height="384">
 
 ### LocationMapActivity
 ----
@@ -121,7 +121,7 @@ currentPositionMarker = mMap.addMarker(markerOpt);
 currentPositionMarker.showInfoWindow();
 </code></pre>
 
-![images](./images/locationmap-location.png =220x)
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-location.png" width="216" height="384">
 
 - 更新目前位置
 當reciever取得更新位置時，呼叫
