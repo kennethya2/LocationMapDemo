@@ -11,7 +11,7 @@
 
 進入LocationMap入口與定位權限檢查。
 
-<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-MainActivity.png" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-MainActivity.png" width="216" height="384">
 
 #### 1. 開啟地圖前先進行定位權限檢查  
 在android 6.0以上版本 (API level 23)，對於危險權限的存取需要經過使用者同意。
@@ -27,7 +27,7 @@ if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACC
 }
 </code></pre>
 
-<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission.jpg" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission.jpg" width="216" height="384">
 
 #### 2. 權限取得結果
 
@@ -54,8 +54,8 @@ private void goResetAppPermission(){
 }
 </code></pre>
 
-<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission-denied.png" width="216" height="384">
-<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-permission-setting.png" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission-denied.png" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-permission-setting.png" width="216" height="384">
 
 ### LocationMapActivity
 ----
@@ -121,7 +121,7 @@ currentPositionMarker = mMap.addMarker(markerOpt);
 currentPositionMarker.showInfoWindow();
 </code></pre>
 
-<img src="https://s3-ap-northeast-1.amazonaws.com/marktdown/LocationMapDemo/locationmap-location.png" width="216" height="384">
+<img src="https://raw.githubusercontent.com/kennethya2/LocationMapDemo/master/images/locationmap-location.png" width="216" height="384">
 
 - 更新目前位置
 當reciever取得更新位置時，呼叫
