@@ -11,7 +11,7 @@
 
 進入LocationMap入口與定位權限檢查。
 
-![images](images/locationmap-MainActivity.png =220x)
+![images](./images/locationmap-MainActivity.png =220x)
 
 #### 1. 開啟地圖前先進行定位權限檢查  
 在android 6.0以上版本 (API level 23)，對於危險權限的存取需要經過使用者同意。
@@ -27,7 +27,7 @@ if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACC
 }
 </code></pre>
 
-![images](images/locationmap-permission.jpg =220x)
+![images](./images/locationmap-permission.jpg =220x)
 
 #### 2. 權限取得結果
 
@@ -54,8 +54,8 @@ private void goResetAppPermission(){
 }
 </code></pre>
 
-![images](images/locationmap-permission-denied.png =220x)
-![images](images/locationmap-permission-setting.png =220x)
+![images](./images/locationmap-permission-denied.png =220x)
+![images](./images/locationmap-permission-setting.png =220x)
 
 ### LocationMapActivity
 ----
@@ -121,7 +121,7 @@ currentPositionMarker = mMap.addMarker(markerOpt);
 currentPositionMarker.showInfoWindow();
 </code></pre>
 
-![images](images/locationmap-location.png =220x)
+![images](./images/locationmap-location.png =220x)
 
 - 更新目前位置
 當reciever取得更新位置時，呼叫
