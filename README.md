@@ -1,10 +1,10 @@
 #LocationMapDemo
 
 ## 類別:
-- [MainActivity](https://github.com/kennethya2/LocationMapDemo/new/master?readme=1#mainactivity) 
-- [LocationMapActivity](https://github.com/kennethya2/LocationMapDemo/new/master?readme=1#locationmapactivity) 
-- [LocationUpdateService](https://github.com/kennethya2/LocationMapDemo/new/master?readme=1#locationupdateservice) 
-- [FusedLocationUpdate](https://github.com/kennethya2/LocationMapDemo/new/master?readme=1#fusedlocationupdate) 
+- [MainActivity](https://github.com/kennethya2/LocationMapDemo#mainactivity) 
+- [LocationMapActivity](https://github.com/kennethya2/LocationMapDemo#locationmapactivity) 
+- [LocationUpdateService](https://github.com/kennethya2/LocationMapDemo#locationupdateservice) 
+- [FusedLocationUpdate](https://github.com/kennethya2/LocationMapDemo#fusedlocationupdate) 
 
 ### MainActivity
 ----
