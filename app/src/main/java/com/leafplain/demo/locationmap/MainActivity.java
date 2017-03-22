@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static com.leafplain.demo.locationmap.util.location.FusedLocationUpdate.LOCATION_FINE_PERMS;
+import static com.leafplain.demo.locationmap.util.location.LocationUpdate.LOCATION_FINE_PERMS;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,12 +1,13 @@
 package com.leafplain.demo.locationmap;
 
-import android.content.BroadcastReceiver;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,15 +16,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.leafplain.demo.locationmap.util.location.FusedLocationUpdate;
-import com.leafplain.demo.locationmap.util.location.LocationUpdateService;
+import com.leafplain.demo.locationmap.interfaces.GPSTrackContract;
+import com.leafplain.demo.locationmap.presenter.GPSTrackPresenter;
+import com.leafplain.demo.locationmap.util.location.LocationUpdate;
 import com.leafplain.demo.locationmap.util.pref.LocationPrefUtil;
 
 /**
  * Created by kennethyeh on 2016/12/6.
  */
 
-public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback
+        , GPSTrackContract.View
+        {
 
     private static final String TAG     = "LocationMapActivity";
     private GoogleMap mMap;
@@ -41,17 +45,8 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     private static final String Position_Title_Unknow  = "請稍候";
     private boolean needZoomToDefaultFlag = true;
 
-    private LocationReverseServiceReceiver lrsReceiver = new LocationReverseServiceReceiver();
-    private class LocationReverseServiceReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent){
-            FusedLocationUpdate.LocationInfo locationInfoObj= (FusedLocationUpdate.LocationInfo) intent.getSerializableExtra("LocationInfo");
-            Log.d(TAG, "xLng:"+locationInfoObj.xLng);
-            Log.d(TAG, "yLat:"+locationInfoObj.yLat);
-            Log.i(TAG, "----------");
-            updateCurrentPosition(locationInfoObj);
-        }
-    }
+    private GPSTrackContract.Presenter mGPSTrackPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +55,17 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         mContext = this;
         mLocationPrefUtil = LocationPrefUtil.getInstance(mContext);
         setView();
-        startLocationUpdateService();
+        mGPSTrackPresenter = new GPSTrackPresenter(mContext, this);
+        mGPSTrackPresenter.startLocationUpdateService();
     }
 
     private void setView(){
         mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mMapFragment.getMapAsync(LocationMapActivity.this);
+    }
+
+    public void stopTrack(View v) {
+        showStopDialog();
     }
 
     /**
@@ -85,7 +85,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         float zoom = Zoom_Unknow_Position;
         String title = Position_Title_Unknow;
         String snippet = "";
-        FusedLocationUpdate.LocationInfo mLocationInfo = mLocationPrefUtil.getLatestLocationInfo();
+        LocationUpdate.LocationInfo mLocationInfo = mLocationPrefUtil.getLatestLocationInfo();
         if(mLocationInfo != null){
             lat = mLocationInfo.lat;
             lng = mLocationInfo.lng;
@@ -104,7 +104,9 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         currentPositionMarker.showInfoWindow();
     }
 
-    private void updateCurrentPosition(FusedLocationUpdate.LocationInfo mLocationInfo){
+    @Override
+    public void onResultLocation(Object trackLocation) {
+        LocationUpdate.LocationInfo mLocationInfo = (LocationUpdate.LocationInfo) trackLocation;
         try {
             if(mMap !=null && currentPositionMarker!=null){//有目前地點
                 try {
@@ -139,7 +141,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         // TODO Auto-generated method stub
         super.onResume();
         Log.d(TAG, "onResume!");
-        registerLocationReceiver();
+        mGPSTrackPresenter.registerLocationReceiver();
     }
 
     @Override
@@ -147,52 +149,37 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
         // TODO Auto-generated method stub
         super.onPause();
         Log.d(TAG, "onPause!");
-        unregisterLocationReceiver();
-    }
-
-    private void registerLocationReceiver(){
-        IntentFilter filter = new IntentFilter(FusedLocationUpdate.ACTION);
-        mContext.registerReceiver(lrsReceiver, filter);
-        Log.d(TAG, "registerReceiver");
-    }
-
-    private void unregisterLocationReceiver(){
-        try {
-            mContext.unregisterReceiver(lrsReceiver);// avoid memory leak
-        } catch (Exception e) {Log.w(TAG, "unregisterLRSReceiver:"+e.toString());}
-        Log.d(TAG, "unregisterReceiver");
+        mGPSTrackPresenter.unregisterLocationReceiver();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        LocationMapActivity.this.finish();
-
+//        super.onBackPressed();
+        showStopDialog();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        stopLocationUpdateService();
+        mGPSTrackPresenter.stopLocationUpdateService();
     }
 
-    private void startLocationUpdateService(){
-        Log.d(TAG, "startLocationUpdateService");
-        Intent intent = new Intent();
-        intent.setAction(LocationUpdateService.ACTION_NAME);
-        intent.setPackage(getPackageName());
-        startService(intent);
+    private void showStopDialog(){
+        Dialog mDialog = null;
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("確定停止GPS追蹤？");
+        builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                LocationMapActivity.this.finish();
+            }
+        });
+        builder.setNegativeButton("取消",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) { dialog.dismiss();
+            }
+        });
+        mDialog = builder.create();
+        mDialog.show();
     }
-
-    private void stopLocationUpdateService(){
-        Log.d(TAG, "stopLocationUpdateService");
-        Intent intent = new Intent();
-        intent.setAction(LocationUpdateService.ACTION_NAME);
-        intent.setPackage(getPackageName());
-        stopService(intent);
-    }
-
-
 
 }

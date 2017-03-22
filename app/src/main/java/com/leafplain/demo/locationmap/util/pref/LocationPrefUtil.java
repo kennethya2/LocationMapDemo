@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.leafplain.demo.locationmap.util.location.FusedLocationUpdate;
+import com.leafplain.demo.locationmap.util.location.LocationUpdate;
 
 import java.lang.reflect.Type;
 
@@ -21,7 +21,7 @@ public class LocationPrefUtil {
     private static String PREFS_NAME 	                = "PrefLocationInfo";
     private static final String PREFS_KEY_LOCATION      = "LocationInfo";
 
-    private static final Type TYPE_LOCATION = new TypeToken<FusedLocationUpdate.LocationInfo>() {}.getType();
+    private static final Type TYPE_LOCATION = new TypeToken<LocationUpdate.LocationInfo>() {}.getType();
 
     private Context mContext = null;
     public static synchronized LocationPrefUtil getInstance(Context context){
@@ -33,14 +33,14 @@ public class LocationPrefUtil {
         prefs       = mContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
-    public synchronized void setLatestLocationInfo(FusedLocationUpdate.LocationInfo locationInfo){
+    public synchronized void setLatestLocationInfo(LocationUpdate.LocationInfo locationInfo){
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PREFS_KEY_LOCATION, new Gson().toJson(locationInfo));
         editor.commit();
     }
 
-    public synchronized FusedLocationUpdate.LocationInfo getLatestLocationInfo(){
-        FusedLocationUpdate.LocationInfo locationInfo = new Gson().fromJson(prefs.getString(PREFS_KEY_LOCATION, null), TYPE_LOCATION);
+    public synchronized LocationUpdate.LocationInfo getLatestLocationInfo(){
+        LocationUpdate.LocationInfo locationInfo = new Gson().fromJson(prefs.getString(PREFS_KEY_LOCATION, null), TYPE_LOCATION);
         return locationInfo;
     }
 }

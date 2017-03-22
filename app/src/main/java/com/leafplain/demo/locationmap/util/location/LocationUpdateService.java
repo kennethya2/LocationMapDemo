@@ -14,7 +14,7 @@ public class LocationUpdateService extends Service {
     public static final String TAG              = "LocationUpdateService";
 
     public static final String ACTION_NAME      = "com.leafplain.demo.locationmap.util.location.LocationUpdateService";
-    private FusedLocationUpdate mFusedLocationUpdate = null;
+    private LocationUpdate mFusedLocationUpdate = null;
 
     public void onCreate(){
         super.onCreate();
@@ -26,7 +26,7 @@ public class LocationUpdateService extends Service {
      * Get Current Location
      * **/
     private void goTraceLocation(){
-        mFusedLocationUpdate = new FusedLocationUpdate(getApplicationContext());
+        mFusedLocationUpdate = new LocationUpdate(getApplicationContext());
         mFusedLocationUpdate.onStartFusedLocationUpdate();
     }
 

@@ -24,12 +24,12 @@ import java.io.Serializable;
  * Created by kennethyeh on 2016/12/6.
  */
 
-public class FusedLocationUpdate implements GoogleApiClient.ConnectionCallbacks
+public class LocationUpdate implements GoogleApiClient.ConnectionCallbacks
         , GoogleApiClient.OnConnectionFailedListener
         , LocationListener {
 
-    private static final String TAG     = "FusedLocationUpdate";
-    public static final String ACTION   = "com.leafplain.demo.locationmap.util.location.FusedLocationUpdate";
+    private static final String TAG     = "LocationUpdate";
+    public static final String ACTION   = "com.leafplain.demo.locationmap.util.location.LocationUpdate";
 
     public static final String[] LOCATION_FINE_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -39,11 +39,11 @@ public class FusedLocationUpdate implements GoogleApiClient.ConnectionCallbacks
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
-    private static final long INTERVAL = 1000;
+    private static final long INTERVAL = 15000;
 
     private LocationPrefUtil mLocationPrefUtil= null;
 
-    public FusedLocationUpdate(Context context) {
+    public LocationUpdate(Context context) {
         mContext = context;
 
         // Create a new global location parameters object
