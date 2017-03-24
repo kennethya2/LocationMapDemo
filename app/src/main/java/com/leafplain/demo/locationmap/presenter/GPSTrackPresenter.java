@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.leafplain.demo.locationmap.interfaces.GPSTrackContract;
@@ -64,7 +65,8 @@ public class GPSTrackPresenter implements GPSTrackContract.Presenter{
     private class LocationReverseServiceReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent){
-            LocationUpdate.LocationInfo locationInfoObj= (LocationUpdate.LocationInfo) intent.getSerializableExtra("LocationInfo");
+            Bundle bundle =intent.getExtras();
+            LocationUpdate.LocationInfo locationInfoObj= (LocationUpdate.LocationInfo) bundle.getSerializable("LocationInfo");
             Log.d(TAG, "xLng:"+locationInfoObj.xLng);
             Log.d(TAG, "yLat:"+locationInfoObj.yLat);
             Log.i(TAG, "----------");

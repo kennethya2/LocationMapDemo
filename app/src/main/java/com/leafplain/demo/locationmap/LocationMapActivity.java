@@ -26,7 +26,7 @@ import com.leafplain.demo.locationmap.util.pref.LocationPrefUtil;
  */
 
 public class LocationMapActivity extends AppCompatActivity implements OnMapReadyCallback
-        , GPSTrackContract.View
+        , GPSTrackContract.View<LocationUpdate.LocationInfo>
         {
 
     private static final String TAG     = "LocationMapActivity";
@@ -105,8 +105,7 @@ public class LocationMapActivity extends AppCompatActivity implements OnMapReady
     }
 
     @Override
-    public void onResultLocation(Object trackLocation) {
-        LocationUpdate.LocationInfo mLocationInfo = (LocationUpdate.LocationInfo) trackLocation;
+    public void onResultLocation(LocationUpdate.LocationInfo mLocationInfo) {
         try {
             if(mMap !=null && currentPositionMarker!=null){//有目前地點
                 try {

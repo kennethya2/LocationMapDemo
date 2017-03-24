@@ -6,8 +6,8 @@ package com.leafplain.demo.locationmap.interfaces;
 
 public interface GPSTrackContract {
 
-    interface View {
-        void onResultLocation(Object trackLocation);
+    interface View<T>{
+        void onResultLocation(T trackLocation);
     }
 
     interface Presenter {
