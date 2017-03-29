@@ -32,15 +32,8 @@ if (ActivityCompat.checkSelfPermission(mContext, android.Manifest.permission.ACC
 #### 2. 權限取得結果
 
  ``onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)``
-<<<<<<< HEAD
-
 若使用者勾選不再提示時```showRationale==false```做後續處理，以取得定位權限 。
 <pre><code>
-=======
- 
-若使用者勾選不再提示時```showRationale==false```做後續處理，以取得定位權限 。
-<pre><code> 
->>>>>>> develop_kenneth
 boolean showRationale = shouldShowRequestPermissionRationale(permissions[0]);
 if (!showRationale) { // user also CHECKED "never ask again"
     showToast();
